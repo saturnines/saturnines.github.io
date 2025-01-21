@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Resume from './pages/Resume';
-import Projects from './pages/Projects';
+import Home from './pages/home';
+import Resume from './pages/resume';
+import Projects from './pages/projects';
 
 export default function App() {
   return (
