@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Resume from './pages/Resume';
@@ -7,7 +7,7 @@ import Projects from './pages/Projects';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <div className="min-h-screen bg-gray-50">
         <Navbar />
         <Routes>
@@ -16,6 +16,6 @@ export default function App() {
           <Route path="/projects" element={<Projects />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
