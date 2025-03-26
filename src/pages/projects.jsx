@@ -25,11 +25,13 @@ export default function Projects() {
       and microservices architecture. Currently expanding with additional services.
       
       Key Features:
-      • Microservices architecture with Kafka message streaming
-      • Asynchronous data processing with PostgreSQL
-      • Circuit breaker implementation for resilience
-      • Connection pooling for improved performance`,
-      tech: ["Python", "FastAPI", "PostgreSQL", "Kafka", "Docker", "asyncpg"],
+      • Built a distributed data system that processes game item data in real-time with automatic error handling
+        and recovery.
+      • Used Kafka to queue messages between services and RabbitMQ to track and visualize system metrics
+      • Set up EFK stack to monitor service health and identify bottlenecks in each microservice.
+      • Added LLM integration to analyze market data and provide trading recommendations based on item
+        statistics.,
+      tech: ["Python", "FastAPI", "PostgreSQL", "Kafka", "Docker", "asyncpg","RabbitMQ"],
       status: "In active development - adding new services",
       github: "https://github.com/saturnines/multicloud-llm"
     }
