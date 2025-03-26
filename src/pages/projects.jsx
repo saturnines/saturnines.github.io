@@ -3,6 +3,22 @@ import React from 'react';
 export default function Projects() {
   const projects = [
     {
+      title: "Data Processing Pipeline",
+      fullDescription: `A distributed data processing system focused on efficient data handling 
+      and microservices architecture. Currently expanding with additional services.
+      
+      Key Features:
+      • Built a distributed data system that processes game item data in real-time with automatic error handling
+        and recovery.
+      • Used Kafka to queue messages between services and RabbitMQ to track and visualize system metrics
+      • Set up EFK stack to monitor service health and identify bottlenecks in each microservice.
+      • Added LLM integration to analyze market data and provide trading recommendations based on item
+        statistics.`,
+      tech: ["Python", "FastAPI", "PostgreSQL", "Kafka", "Docker", "asyncpg","RabbitMQ"],
+      status: "In active development - adding new services",
+      github: "https://github.com/saturnines/multicloud-llm"
+    },
+    {
       title: "Game Market Analysis API",
       fullDescription: `A backend system designed for real-time market data analysis, 
       showcasing distributed systems concepts and API development.
@@ -20,20 +36,20 @@ export default function Projects() {
       }
     },
     {
-      title: "Data Processing Pipeline",
-      fullDescription: `A distributed data processing system focused on efficient data handling 
-      and microservices architecture. Currently expanding with additional services.
+      title: "Psychology Fact Generator",
+      fullDescription: `A RESTful API built with Quarkus to generate psychology facts with separate loader and API service.
       
       Key Features:
-      • Built a distributed data system that processes game item data in real-time with automatic error handling
-        and recovery.
-      • Used Kafka to queue messages between services and RabbitMQ to track and visualize system metrics
-      • Set up EFK stack to monitor service health and identify bottlenecks in each microservice.
-      • Added LLM integration to analyze market data and provide trading recommendations based on item
-        statistics.,
-      tech: ["Python", "FastAPI", "PostgreSQL", "Kafka", "Docker", "asyncpg","RabbitMQ"],
-      status: "In active development - adding new services",
-      github: "https://github.com/saturnines/multicloud-llm"
+      • Built RESTful API with Quarkus to generate psychology facts
+      • Used Docker and nginx for containerization and deployment
+      • Set up GitHub Actions for a CI/CD pipeline
+      • Used Memcached as a failover cache between services`,
+      tech: ["Java", "Quarkus", "Memcached", "Docker", "Nginx", "GitHub Actions"],
+      apiDemo: {
+        baseUrl: "https://api.kevinsapi.net/psychology/fact",
+        description: "Try out the live Psychology Fact Generator API:",
+        examples: ["fact"]
+      }
     }
   ];
 
@@ -70,7 +86,7 @@ export default function Projects() {
                       {project.apiDemo.examples.map((example) => (
                         <a
                           key={example}
-                          href={`${project.apiDemo.baseUrl}?search_term=${example}`}
+                          href={`${project.apiDemo.baseUrl}${example !== "fact" ? `?search_term=${example}` : ""}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="px-3 py-1 bg-white text-blue-600 border border-blue-200 rounded hover:bg-blue-50 transition-colors"
@@ -86,7 +102,7 @@ export default function Projects() {
                     <p className="text-gray-400 mb-2">Base URL:</p>
                     <div className="flex items-center gap-2">
                       <code className="text-green-400">
-                        {project.apiDemo.baseUrl}?search_term=[your-search-term]
+                        {project.apiDemo.baseUrl}{project.title === "Psychology Fact Generator" ? "" : "?search_term=[your-search-term]"}
                       </code>
                     </div>
                   </div>
