@@ -1,145 +1,136 @@
 import React from 'react';
 
-const Skill = ({ name, highlighted = false }) => (
-  <span className={`px-2 py-1 rounded ${
-    highlighted 
-      ? 'bg-gray-200 text-gray-800 font-medium' 
-      : 'text-gray-600'
-  }`}>
-    {name}
-  </span>
-);
+export default function Projects() {
+  const projects = [
+    {
+      title: "Data Processing Pipeline",
+      fullDescription: `A distributed data processing system focused on efficient data handling 
+      and microservices architecture. Currently expanding with additional services.
+      
+      Key Features:
+      • Built a distributed data system that processes game item data in real-time with automatic error handling
+        and recovery.
+      • Used Kafka to queue messages between services and RabbitMQ to track and visualize system metrics
+      • Set up EFK stack to monitor service health and identify bottlenecks in each microservice.
+      • Added LLM integration to analyze market data and provide trading recommendations based on item
+        statistics.`,
+      tech: ["Python", "FastAPI", "PostgreSQL", "Kafka", "Docker", "asyncpg","RabbitMQ"],
+      status: "In active development - adding new services",
+      github: "https://github.com/saturnines/multicloud-llm"
+    },
+    {
+      title: "Game Market Analysis API",
+      fullDescription: `A backend system designed for real-time market data analysis, 
+      showcasing distributed systems concepts and API development.
+      
+      Key Features:
+      • Real-time data processing with Redis caching
+      • RESTful API endpoints with FastAPI
+      • Docker containerization
+      • Automated deployment to GCP`,
+      tech: ["Python", "FastAPI", "Redis", "Docker", "GCP", "Nginx"],
+      apiDemo: {
+        baseUrl: "https://api.kevinsapi.net/items/",
+        description: "Try out the live API by searching for market items:",
+        examples: ["wheat", "gold", "enchanted packed ice"]
+      }
+    },
+    {
+      title: "Psychology Fact Generator",
+      fullDescription: `A RESTful API built with Quarkus to generate psychology facts with separate loader and API service.
+      
+      Key Features:
+      • Built RESTful API with Quarkus to generate psychology facts
+      • Used Docker and nginx for containerization and deployment
+      • Set up GitHub Actions for a CI/CD pipeline
+      • Used Memcached as a failover cache between services`,
+      tech: ["Java", "Quarkus", "Memcached", "Docker", "Nginx", "GitHub Actions"],
+      apiDemo: {
+        baseUrl: "https://api.kevinsapi.net/psychology/fact",
+        description: "Try out the live Psychology Fact Generator API:",
+        examples: ["fact"]
+      }
+    }
+  ];
 
-export default function Resume() {
   return (
-    <main className="max-w-4xl mx-auto p-6">
+    <main className="max-w-6xl mx-auto p-6">
       <div className="mt-24 mb-24">
-        <h1 className="text-3xl font-medium mb-12 tracking-wide text-center">RESUME</h1>
-        
-        <div className="bg-white shadow-sm p-8">
-          {/* Education Section */}
-          <section className="mb-12">
-            <h2 className="text-xl font-medium mb-4 uppercase">Education</h2>
-            <div className="mb-6">
-              <div className="flex justify-between mb-1">
-                <div className="font-medium">Oregon State University</div>
-                <div className="text-gray-600">Expected December 2025</div>
+        <h1 className="text-3xl font-medium mb-12 tracking-wide text-center">PROJECTS</h1>
+        <div className="grid grid-cols-1 gap-16">
+          {projects.map((project, index) => (
+            <div key={index} className="bg-white p-8 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex justify-between items-start mb-6">
+                <h2 className="text-2xl font-medium">{project.title}</h2>
+                {project.status && (
+                  <span className="px-3 py-1 bg-blue-50 text-blue-700 text-sm rounded-full">
+                    {project.status}
+                  </span>
+                )}
               </div>
-              <div>B.S. Computer Science • GPA: 3.54</div>
-            </div>
-          </section>
+              
+              <div className="prose max-w-none mb-6 text-gray-600 whitespace-pre-line">
+                {project.fullDescription}
+              </div>
+              
+              {/* API Demo Section */}
+              {project.apiDemo && (
+                <div className="mb-8 bg-gray-50 p-6 rounded-lg">
+                  <h3 className="text-lg font-medium mb-4">Live API Demo</h3>
+                  <p className="text-gray-600 mb-4">{project.apiDemo.description}</p>
+                  
+                  {/* Example Links */}
+                  <div className="mb-4">
+                    <span className="text-gray-600">Try these examples: </span>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {project.apiDemo.examples.map((example) => (
+                        <a
+                          key={example}
+                          href={`${project.apiDemo.baseUrl}${example !== "fact" ? `?search_term=${example}` : ""}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-1 bg-white text-blue-600 border border-blue-200 rounded hover:bg-blue-50 transition-colors"
+                        >
+                          {example}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
 
-          {/* Projects Section */}
-          <section className="mb-12">
-            <h2 className="text-xl font-medium mb-4 uppercase">Projects</h2>
-            
-            {/* Game Market Analysis API */}
-            <div className="mb-8">
-              <div className="flex justify-between mb-2">
-                <div className="font-medium">Game Market Analysis API</div>
-                <div className="text-gray-500 text-sm">Python, FastAPI, Redis, Docker, GCP, Nginx</div>
-              </div>
-              <ul className="list-disc ml-4 space-y-1 text-gray-600">
-                <li>Developed and deployed a backend API for real-time market data analysis and trading signal generation using FastAPI</li>
-                <li>Implemented efficient data fetching and processing from external financial APIs; used Redis to manage rate limits and cache results</li>
-                <li>Configured Cross-Origin Resource Sharing (CORS) and secured API endpoints to enable controlled access to the RESTful FastAPI backend</li>
-                <li>Implemented a CI/CD pipeline using GitHub Actions for automated deployment of the FastAPI application to Google Compute Engine, using Docker for containerization</li>
-              </ul>
-            </div>
+                  {/* API URL Display */}
+                  <div className="bg-gray-900 p-4 rounded-lg font-mono text-sm">
+                    <p className="text-gray-400 mb-2">Base URL:</p>
+                    <div className="flex items-center gap-2">
+                      <code className="text-green-400">
+                        {project.apiDemo.baseUrl}{project.title === "Psychology Fact Generator" ? "" : "?search_term=[your-search-term]"}
+                      </code>
+                    </div>
+                  </div>
+                </div>
+              )}
 
-            {/* Data Processing Pipeline */}
-            <div className="mb-8">
-              <div className="flex justify-between mb-2">
-                <div className="font-medium">Data Processing Pipeline</div>
-                <div className="text-gray-500 text-sm">Python, FastAPI, Docker, PostgreSQL, Kafka</div>
-              </div>
-              <ul className="list-disc ml-4 space-y-1 text-gray-600">
-                <li>Built a distributed data processing system that ingests, analyzes, and caches data</li>
-                <li>Used Kafka to stream data between microservices and implemented a hybrid circuit breaker and rate limiter</li>
-                <li>Developed a database microservice with PostgreSQL and asyncpg to store and retrieve data asynchronously and used connection pooling to increase performance</li>
-                <li>Built an in-memory cache to prioritize data retrieval based on metrics like volatility and liquidity</li>
-              </ul>
-            </div>
+              {/* Direct GitHub Link */}
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
+                  View on GitHub
+                </a>
+              )}
 
-            {/* Psychology Fact Generator */}
-            <div className="mb-8">
-              <div className="flex justify-between mb-2">
-                <div className="font-medium">Psychology Fact Generator</div>
-                <div className="text-gray-500 text-sm">Java, Spring Boot, EFK Stack, Memcached</div>
-              </div>
-              <ul className="list-disc ml-4 space-y-1 text-gray-600">
-                <li>Built RESTful API using Spring Boot to generate psychology facts with separate loader and API service</li>
-                <li>Implemented logging using the EFK stack (Elasticsearch, Fluentd, Kibana) for log management and service monitoring</li>
-                <li>Used Docker and nginx for containerization and deployment, and GitHub Actions for a CI/CD pipeline</li>
-                <li>Used Memcached as a failover cache between services</li>
-              </ul>
-            </div>
-          </section>
-
-          {/* Skills Section */}
-          <section>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-medium uppercase">Technical Skills</h2>
-              <div className="text-sm text-gray-600 flex items-center gap-2">
-                <span className="text-gray-600">things I've used</span>
-                <span>and</span>
-                <span className="bg-gray-200 px-2 py-1 rounded">things I use often</span>
+              {/* Technologies Used */}
+              <div className="flex flex-wrap gap-2 mt-6">
+                {project.tech.map((tech, i) => (
+                  <span key={i} className="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded">
+                    {tech}
+                  </span>
+                ))}
               </div>
             </div>
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-medium mb-3">Languages</h3>
-                <div className="flex flex-wrap gap-2">
-                  <Skill name="Python" highlighted={true} />
-                  <Skill name="Java" highlighted={true} />
-                </div>
-              </div>
-              <div>
-                <h3 className="font-medium mb-3">Frameworks & Libraries</h3>
-                <div className="flex flex-wrap gap-2">
-                  <Skill name="FastAPI" highlighted={true} />
-                  <Skill name="Flask" highlighted={true} />
-                  <Skill name="Spring Boot" highlighted={true} />
-                  <Skill name="asyncio" highlighted={true} />
-                  <Skill name="Pydantic" />
-                </div>
-              </div>
-              <div>
-                <h3 className="font-medium mb-3">Databases & Brokers</h3>
-                <div className="flex flex-wrap gap-2">
-                  <Skill name="PostgreSQL" highlighted={true} />
-                  <Skill name="Redis" highlighted={true} />
-                  <Skill name="Kafka" highlighted={true} />
-                  <Skill name="MongoDB" />
-                  <Skill name="Memcached" />
-                  <Skill name="Cassandra" />
-                </div>
-              </div>
-              <div>
-                <h3 className="font-medium mb-3">Infrastructure & Tools</h3>
-                <div className="flex flex-wrap gap-2">
-                  <Skill name="Docker" highlighted={true} />
-                  <Skill name="Nginx" highlighted={true} />
-                  <Skill name="Git" highlighted={true} />
-                  <Skill name="GitHub Actions" highlighted={true} />
-                  <Skill name="GCP" />
-                  <Skill name="AWS" />
-                  <Skill name="Kubernetes" />
-                  <Skill name="Elasticsearch" />
-                  <Skill name="Fluentd" />
-                  <Skill name="Kibana" />
-                </div>
-              </div>
-              <div>
-                <h3 className="font-medium mb-3">Testing & Methodologies</h3>
-                <div className="flex flex-wrap gap-2">
-                  <Skill name="pytest" highlighted={true} />
-                  <Skill name="unittest" />
-                  <Skill name="Agile" />
-                </div>
-              </div>
-            </div>
-          </section>
+          ))}
         </div>
       </div>
     </main>
